@@ -36,14 +36,14 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     @Override
     public void registrySingleton(String beanName, Object singletonObject) {
         Assert.notNull(beanName, "beanName must not be null");
-
-        Object object = this.singletonObjects.get(beanName);
-        if (object != null) {
-            throw new IllegalStateException("could not register object [" + singletonObject + "] " +
-                    "under bean name '" + beanName + "': there is already object [" + singletonObject + "]");
+        synchronized (this.singletonObjects) {
+            Object object = this.singletonObjects.get(beanName);
+            if (object != null) {
+                throw new IllegalStateException("could not register object [" + singletonObject + "] " +
+                        "under bean name '" + beanName + "': there is already object [" + singletonObject + "] bound");
+            }
+            this.singletonObjects.put(beanName, singletonObject);
         }
-        this.singletonObjects.put(beanName, singletonObject);
-
     }
 
     @Override

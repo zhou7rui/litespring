@@ -25,8 +25,8 @@ package org.litespring.beans;
 
 public interface BeanDefinition {
 
-    String SCOPE_singleton = "singleton";
-    String SCOPE_prototype = "prototype";
+    String SCOPE_SINGLETON = "singleton";
+    String SCOPE_PROTOTYPE = "prototype";
     String SCOPE_DEFAULT = "";
 
     boolean isSingleton();

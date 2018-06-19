@@ -41,12 +41,12 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     @Override
     public boolean isSingleton() {
-        return SCOPE_singleton.equals(getScope()) || SCOPE_DEFAULT.equals(getScope());
+        return SCOPE_SINGLETON.equals(getScope()) || SCOPE_DEFAULT.equals(getScope());
     }
 
     @Override
     public boolean isPrototype() {
-        return SCOPE_prototype.equals(getScope());
+        return SCOPE_PROTOTYPE.equals(getScope());
     }
 
     @Override
