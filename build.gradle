@@ -11,5 +11,8 @@ repositories {
 
 dependencies {
     compile 'dom4j:dom4j:1.6.1'
+
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+
     testCompile 'junit:junit:4.12'
 }
