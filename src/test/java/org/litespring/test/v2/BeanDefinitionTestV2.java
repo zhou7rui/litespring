@@ -26,7 +26,7 @@ public class BeanDefinitionTestV2 {
 
         List<PropertyValue> pvs = definition.getPropertyValues();
 
-        Assert.assertTrue(pvs.size() == 2);
+        Assert.assertTrue(pvs.size() == 4);
         {
             PropertyValue  propertyValue = getPropertyValue("accountDao",pvs);
             Assert.assertNotNull(propertyValue);

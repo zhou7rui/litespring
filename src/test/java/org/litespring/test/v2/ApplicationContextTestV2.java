@@ -21,7 +21,7 @@ public class ApplicationContextTestV2 {
 
         Assert.assertEquals(storeService.getOwner(),"foo");
 
-        Assert.assertEquals(storeService.getVersion(), "7");
+        Assert.assertEquals(storeService.getVersion(), 7);
 
     }
 

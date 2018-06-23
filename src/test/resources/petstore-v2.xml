@@ -7,6 +7,8 @@
     <bean id="petStore" class="org.litespring.service.v2.PetStoreService" >
         <property name="accountDao" ref="accountDao" />
         <property name="itemDao" ref="itemDao" />
+        <property name="owner" value="foo" />
+        <property name="version" value="7" />
     </bean>
 
 

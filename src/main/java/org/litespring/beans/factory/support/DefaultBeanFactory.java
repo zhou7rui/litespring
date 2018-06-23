@@ -25,6 +25,7 @@ package org.litespring.beans.factory.support;
 
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.PropertyValue;
+import org.litespring.beans.SimpleTypeConverter;
 import org.litespring.beans.factory.BeanCreationException;
 import org.litespring.beans.factory.config.ConfigurableBeanFactory;
 import org.litespring.utils.ClassUtils;
@@ -116,6 +117,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         }
 
         BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        SimpleTypeConverter converter = new SimpleTypeConverter();
         try {
             for (PropertyValue value : propertyValues) {
 
@@ -130,7 +132,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
                 PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds){
                     if(pd.getName().equals(propertyName)){
-                        pd.getWriteMethod().invoke(bean,resolveValue);
+                        Object covertObject = converter.converterIfNecessary(resolveValue,pd.getPropertyType());
+                        pd.getWriteMethod().invoke(bean,covertObject);
                         break;
                     }
                 }
