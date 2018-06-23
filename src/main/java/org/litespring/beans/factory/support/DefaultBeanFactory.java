@@ -24,10 +24,19 @@
 package org.litespring.beans.factory.support;
 
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.BeanCreationException;
 import org.litespring.beans.factory.config.ConfigurableBeanFactory;
 import org.litespring.utils.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -62,31 +71,75 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         }
         if (beanDefinition.isSingleton()) {
             Object bean = getSingleton(beanID);
-            if(bean == null) {
+            if (bean == null) {
                 bean = createBean(beanDefinition);
-                registrySingleton(beanID,bean);
+                registrySingleton(beanID, bean);
             }
 
             return bean;
         }
-       return createBean(beanDefinition);
+        return createBean(beanDefinition);
 
     }
 
-    private Object createBean(BeanDefinition beanDefinition){
+    private Object createBean(BeanDefinition beanDefinition) {
+
+        // 创建实例
+        Object bean = instantiateBean(beanDefinition);
+
+        // 设置实例属性
+        populateBean(beanDefinition, bean);
+
+
+        return bean;
+    }
+
+    private Object instantiateBean(BeanDefinition beanDefinition) {
 
         String beanClassName = beanDefinition.getBeanClassName();
 
         ClassLoader classLoader = getBeanClassloader();
+
         try {
-
             Class<?> beanClass = classLoader.loadClass(beanClassName);
-
             return beanClass.newInstance();
-
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + "failure");
         }
+
+    }
+
+    private void populateBean(BeanDefinition bd, Object bean) {
+        List<PropertyValue> propertyValues = bd.getPropertyValues();
+        if (propertyValues == null && propertyValues.isEmpty()) {
+            return;
+        }
+
+        BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        try {
+            for (PropertyValue value : propertyValues) {
+
+                String propertyName = value.getName();
+
+                Object originalValue = value.getValue();
+
+                Object resolveValue = resolver.resolveValueIfNecessary(originalValue);
+
+                // 使用java Beans 得到bean信息, 获取到set 方法 通反射调用set方法
+                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds){
+                    if(pd.getName().equals(propertyName)){
+                        pd.getWriteMethod().invoke(bean,resolveValue);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
+        }
+
+
     }
 
 

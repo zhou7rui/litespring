@@ -19,6 +19,10 @@ public class ApplicationContextTestV2 {
 
         Assert.assertNotNull(storeService.getItemDao());
 
+        Assert.assertEquals(storeService.getOwner(),"foo");
+
+        Assert.assertEquals(storeService.getVersion(), "7");
+
     }
 
 
