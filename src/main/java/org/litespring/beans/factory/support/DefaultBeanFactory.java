@@ -118,7 +118,12 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
         BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
         SimpleTypeConverter converter = new SimpleTypeConverter();
+
         try {
+            // 使用java Beans 得到bean信息, 获取到set 方法 通反射调用set方法
+            BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+            PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+
             for (PropertyValue value : propertyValues) {
 
                 String propertyName = value.getName();
@@ -127,9 +132,6 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
 
                 Object resolveValue = resolver.resolveValueIfNecessary(originalValue);
 
-                // 使用java Beans 得到bean信息, 获取到set 方法 通反射调用set方法
-                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-                PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds){
                     if(pd.getName().equals(propertyName)){
                         Object covertObject = converter.converterIfNecessary(resolveValue,pd.getPropertyType());

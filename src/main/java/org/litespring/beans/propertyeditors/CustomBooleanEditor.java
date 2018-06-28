@@ -41,20 +41,18 @@ public class CustomBooleanEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
 
-        String input = (text != null) ?  text.trim() : null;
+        String input = (text != null) ? text.trim() : null;
 
-        if(this.allowEmpty && StringUtils.hasLength(input)){
+        if (this.allowEmpty && StringUtils.hasLength(input)) {
             //Treat empty String as null value
             setValue(null);
-        }
-
-        if(VALUE_TRUE.equals(text) || VALUE_ON.equals(text) || VALUE_1.equals(text) || VALUE_YES.equals(text)){
+        } else if (VALUE_TRUE.equals(text) || VALUE_ON.equals(text) || VALUE_1.equals(text) || VALUE_YES.equals(text)) {
 
             setValue(Boolean.TRUE);
 
-        }else if (VALUE_FALSE.equals(text) || VALUE_OFF.equals(text) || VALUE_0.equals(text) || VALUE_NO.equals(text)){
+        } else if (VALUE_FALSE.equals(text) || VALUE_OFF.equals(text) || VALUE_0.equals(text) || VALUE_NO.equals(text)) {
             setValue(Boolean.FALSE);
-        }else {
+        } else {
 
             throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
 
@@ -66,11 +64,11 @@ public class CustomBooleanEditor extends PropertyEditorSupport {
     @Override
     public String getAsText() {
 
-        if (Boolean.TRUE.equals(getValue())){
+        if (Boolean.TRUE.equals(getValue())) {
             return VALUE_TRUE;
-        }else if (Boolean.FALSE.equals(getValue())){
+        } else if (Boolean.FALSE.equals(getValue())) {
             return VALUE_FALSE;
-        }else {
+        } else {
             return "";
         }
     }
