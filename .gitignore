@@ -27,3 +27,6 @@ hs_err_pid*
 .gradle/
 build/
 out/
+
+# MAC
+.DS_Store
