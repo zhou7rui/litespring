@@ -23,6 +23,7 @@
 
 package org.litespring.beans.factory.support;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.PropertyValue;
 import org.litespring.beans.SimpleTypeConverter;
@@ -89,7 +90,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
         Object bean = instantiateBean(beanDefinition);
 
         // 设置实例属性
-        populateBean(beanDefinition, bean);
+        populateCommonsBeanUtilsBean(beanDefinition, bean);
 
 
         return bean;
@@ -139,6 +140,34 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry implements 
                         break;
                     }
                 }
+            }
+        } catch (Exception e) {
+            throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
+        }
+
+
+    }
+
+    // 使用 commons BeanUtils 给 属性赋值
+    private void populateCommonsBeanUtilsBean(BeanDefinition bd, Object bean) {
+        List<PropertyValue> propertyValues = bd.getPropertyValues();
+        if (propertyValues == null && propertyValues.isEmpty()) {
+            return;
+        }
+
+        BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+        try {
+
+            for (PropertyValue value : propertyValues) {
+
+                String propertyName = value.getName();
+
+                Object originalValue = value.getValue();
+
+                Object resolveValue = resolver.resolveValueIfNecessary(originalValue);
+
+                BeanUtils.setProperty(bean,propertyName,resolveValue);
+
             }
         } catch (Exception e) {
             throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
