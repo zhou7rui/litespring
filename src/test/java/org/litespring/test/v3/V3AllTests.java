@@ -21,31 +21,19 @@
  * SOFTWARE.
  */
 
-package org.litespring.beans;
+package org.litespring.test.v3;
 
-import java.util.List;
 
-public interface BeanDefinition {
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.litespring.test.v2.*;
 
-    String SCOPE_SINGLETON = "singleton";
-    String SCOPE_PROTOTYPE = "prototype";
-    String SCOPE_DEFAULT = "";
 
-    String getID();
-
-    boolean isSingleton();
-
-    boolean isPrototype();
-
-    String getScope();
-
-    void setScope(String scope);
-
-    String getBeanClassName();
-
-    List<PropertyValue> getPropertyValues();
-
-    ConstructorArgument getConstructorArgument();
-
-    boolean hasConstructorArgument();
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        ApplicationContextTestV3.class,
+        BeanDefinitionTestV3.class,
+        ConstructorResolverTest.class
+})
+public class V3AllTests {
 }

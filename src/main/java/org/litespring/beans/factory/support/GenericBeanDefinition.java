@@ -87,5 +87,10 @@ public class GenericBeanDefinition implements BeanDefinition {
         return this.constructorArgument;
     }
 
+    @Override
+    public boolean hasConstructorArgument() {
+        return !this.constructorArgument.isEmpty();
+    }
+
 
 }

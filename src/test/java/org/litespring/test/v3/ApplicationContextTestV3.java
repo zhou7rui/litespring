@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.litespring.context.ApplicationContext;
 import org.litespring.context.support.ClassPathXmlApplicationContext;
-import org.litespring.service.v2.PetStoreService;
+import org.litespring.service.v3.PetStoreService;
 
 public class ApplicationContextTestV3 {
 

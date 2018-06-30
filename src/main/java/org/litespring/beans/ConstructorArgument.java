@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ConstructorArgument {
 
-    private final static List<ValueHolder> argumentValues = new LinkedList<>();
+    private final List<ValueHolder> argumentValues = new LinkedList<>();
 
 
     public void addArgumentValues(ValueHolder holder) {
