@@ -46,7 +46,9 @@ public class CustomBooleanEditor extends PropertyEditorSupport {
         if (this.allowEmpty && StringUtils.hasLength(input)) {
             //Treat empty String as null value
             setValue(null);
-        } else if (VALUE_TRUE.equals(text) || VALUE_ON.equals(text) || VALUE_1.equals(text) || VALUE_YES.equals(text)) {
+        }
+
+        if (VALUE_TRUE.equals(text) || VALUE_ON.equals(text) || VALUE_1.equals(text) || VALUE_YES.equals(text)) {
 
             setValue(Boolean.TRUE);
 
