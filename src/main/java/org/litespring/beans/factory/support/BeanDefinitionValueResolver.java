@@ -1,14 +1,15 @@
 package org.litespring.beans.factory.support;
 
+import org.litespring.beans.factory.config.ConfigurableBeanFactory;
 import org.litespring.beans.factory.config.RuntimeBeanReference;
 import org.litespring.beans.factory.config.TypedStringValue;
 
 public class BeanDefinitionValueResolver {
 
-    private final DefaultBeanFactory factory;
+    private final ConfigurableBeanFactory factory;
 
 
-    public BeanDefinitionValueResolver(DefaultBeanFactory factory) {
+    public BeanDefinitionValueResolver(ConfigurableBeanFactory factory) {
         this.factory = factory;
     }
 
@@ -20,11 +21,11 @@ public class BeanDefinitionValueResolver {
             RuntimeBeanReference reference = (RuntimeBeanReference) value;
             String beanName = reference.getBeanName();
             return factory.getBean(beanName);
-        }else if (value instanceof TypedStringValue){
+        } else if (value instanceof TypedStringValue) {
 
             TypedStringValue stringValue = (TypedStringValue) value;
             return stringValue.getValue();
-        }else {
+        } else {
             // TODO
             throw new RuntimeException("the value " + value + "has not implemented");
         }

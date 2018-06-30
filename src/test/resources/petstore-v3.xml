@@ -11,9 +11,9 @@
     </bean>
 
 
-    <bean id="accountDao" class="org.litespring.dao.v2.AccountDao"></bean>
+    <bean id="accountDao" class="org.litespring.dao.v3.AccountDao"></bean>
 
-    <bean id="itemDao" class="org.litespring.dao.v2.ItemDao"></bean>
+    <bean id="itemDao" class="org.litespring.dao.v3.ItemDao"></bean>
 
 
 </beans>
