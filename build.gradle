@@ -10,6 +10,9 @@ repositories {
 }
 
 dependencies {
+
+    compile files('libs/spring-core-asm-3.2.18.RELEASE.jar')
+
     compile 'dom4j:dom4j:1.6.1'
 
     compile 'ch.qos.logback:logback-classic:1.2.3'
