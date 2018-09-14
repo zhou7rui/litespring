@@ -1,9 +1,10 @@
 package org.litespring.core.type.classreading;
 
 
-import jdk.internal.org.objectweb.asm.Type;
+
 import org.litespring.core.annotaion.AnnotationAttributes;
 import org.springframework.asm.AnnotationVisitor;
+import org.springframework.asm.Type;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
