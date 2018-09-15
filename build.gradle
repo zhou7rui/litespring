@@ -1,19 +1,19 @@
-group 'org.litespring'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-
 plugins {
+    id 'java'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 jacocoTestReport {
-	reports {
-		xml.enabled = true
-		html.enabled = true
-	}
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
 }
+
+group 'org.litespring'
+version '1.0-SNAPSHOT'
+
 sourceCompatibility = 1.8
 
 repositories {
