@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class ClassPathBeanDefinitionScannerTest {
 
     @Test
+    // TODO
     public void testParseScanedBean() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
 
