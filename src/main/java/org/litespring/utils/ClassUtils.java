@@ -28,12 +28,21 @@ import java.util.Map;
 
 public class ClassUtils {
 
+    /** Suffix for array class names: "[]" */
+    public static final String ARRAY_SUFFIX = "[]";
 
     /** The package separator character: '.' */
     private static final char PACKAGE_SEPARATOR = '.';
 
     /** The path separator character: '/' */
     private static final char PATH_SEPARATOR = '/';
+
+    /** The CGLIB class separator: "$$" */
+    public static final String CGLIB_CLASS_SEPARATOR = "$$";
+
+
+    /** The inner class separator character: '$' */
+    private static final char INNER_CLASS_SEPARATOR = '$';
 
 
     private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new IdentityHashMap<Class<?>, Class<?>>(8);
@@ -110,6 +119,50 @@ public class ClassUtils {
     public static String convertClassNameToResourcePath(String className) {
         Assert.notNull(className, "Class name must not be null");
         return className.replace(PACKAGE_SEPARATOR, PATH_SEPARATOR);
+    }
+
+
+    public static String getShortName(Class<?> clazz) {
+        return getShortName(getQualifiedName(clazz));
+    }
+
+    public static String getShortName(String className) {
+        Assert.hasLength(className, "Class name must not be empty");
+        int lastDotIndex = className.lastIndexOf(PACKAGE_SEPARATOR);
+        int nameEndIndex = className.indexOf(CGLIB_CLASS_SEPARATOR);
+        if (nameEndIndex == -1) {
+            nameEndIndex = className.length();
+        }
+        String shortName = className.substring(lastDotIndex + 1, nameEndIndex);
+        shortName = shortName.replace(INNER_CLASS_SEPARATOR, PACKAGE_SEPARATOR);
+        return shortName;
+    }
+
+
+    public static String getQualifiedName(Class<?> clazz) {
+        Assert.notNull(clazz, "Class must not be null");
+        if (clazz.isArray()) {
+            return getQualifiedNameForArray(clazz);
+        }
+        else {
+            return clazz.getName();
+        }
+    }
+
+    /**
+     * Build a nice qualified name for an array:
+     * component type class name + "[]".
+     * @param clazz the array class
+     * @return a qualified name for the array class
+     */
+    private static String getQualifiedNameForArray(Class<?> clazz) {
+        StringBuilder result = new StringBuilder();
+        while (clazz.isArray()) {
+            clazz = clazz.getComponentType();
+            result.append(ARRAY_SUFFIX);
+        }
+        result.insert(0, clazz.getName());
+        return result.toString();
     }
 
 

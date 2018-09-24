@@ -47,4 +47,9 @@ public class Assert {
     }
 
 
+    public static void hasLength(String text, String message) {
+        if (!StringUtils.hasLength(text)) {
+            throw new IllegalArgumentException(message);
+        }
+    }
 }
