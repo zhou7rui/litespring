@@ -4,7 +4,7 @@ import org.litespring.core.annotaion.AnnotationAttributes;
 
 import java.util.Set;
 
-public interface AnnotationMetadata {
+public interface AnnotationMetadata extends ClassMetadata{
 
     Set<String> getAnnotationTypes();
 
