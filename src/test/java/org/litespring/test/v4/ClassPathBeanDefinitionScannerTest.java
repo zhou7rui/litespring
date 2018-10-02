@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class ClassPathBeanDefinitionScannerTest {
 
     @Test
-    public void testParseScannerdBean() {
+    public void testParseScanedBean() {
         DefaultBeanFactory factory = new DefaultBeanFactory();
 
         String basePackages = "org/litespring/service/v4,org.litespring.dao.v4";
